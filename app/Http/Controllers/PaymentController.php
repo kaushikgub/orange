@@ -27,5 +27,6 @@ class PaymentController extends Controller
     public function payment(Request $request)
     {
         $this->paymentService->payment($request);
+        return redirect('/home');
     }
 }
