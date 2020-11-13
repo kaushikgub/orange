@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\PaymentService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
-    public function __construct()
+    /**
+     * @var PaymentService
+     */
+    private $paymentService;
+
+    public function __construct(PaymentService $paymentService)
     {
         $this->middleware('auth');
+        $this->paymentService = $paymentService;
     }
 
     public function index()
@@ -17,8 +24,8 @@ class PaymentController extends Controller
         return view('user.payment.index');
     }
 
-    public function payment()
+    public function payment(Request $request)
     {
-
+        $this->paymentService->payment($request);
     }
 }
