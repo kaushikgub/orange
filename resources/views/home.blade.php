@@ -1,6 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="modal fade">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Payment Report</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Expire Date</th>
+                            <th>Remaining Days</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ date_format(date_create(Auth::user()->expire_date), 'd-M-Y') }}</td>
+                            <td>{{ date_diff(date_create(Auth::user()->expire_date), date_create(\Illuminate\Support\Carbon::now()))->format("%d Days") }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -31,10 +62,17 @@
                         </table>
                         @if(Auth::user()->status!=1)
                             <a id="activation" href="{{ route('pay') }}" class="btn btn-success">Activate</a>
+                            @else
+                                <button class="btn btn-primary" id="report">Report</button>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).on('click', '#report', function () {
+            $('.modal').modal('show');
+        });
+    </script>
 @endsection

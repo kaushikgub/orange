@@ -19,10 +19,9 @@ class PaymentService
             'expire_date' => Carbon::now()->addDays(30),
             'status' => true
         ]);
-
         Stripe::setApiKey(env('STRIPE_SECRET'));
         Charge::create ([
-            "amount" => 10 * 10,
+            "amount" => 100 * 10,
             "currency" => "usd",
             "source" => $request->get('stripeToken'),
             "description" => "Test payment from Kaushik Mallik."
