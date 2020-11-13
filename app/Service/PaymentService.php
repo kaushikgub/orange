@@ -15,16 +15,17 @@ class PaymentService
 {
     public function payment(Request $request)
     {
-        User::find(Auth::id())->update([
-            'expire_date' => Carbon::now()->addDays(30),
-            'status' => true
-        ]);
         Stripe::setApiKey(env('STRIPE_SECRET'));
         Charge::create ([
             "amount" => 100 * 10,
             "currency" => "usd",
             "source" => $request->get('stripeToken'),
             "description" => "Test payment from Kaushik Mallik."
+        ]);
+
+        User::find(Auth::id())->update([
+            'expire_date' => Carbon::now()->addDays(30),
+            'status' => true
         ]);
     }
 

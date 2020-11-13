@@ -60,10 +60,11 @@
                             </tr>
                             </tbody>
                         </table>
-                        @if(Auth::user()->status!=1)
-                            <a id="activation" href="{{ route('pay') }}" class="btn btn-success">Activate</a>
-                            @else
-                                <button class="btn btn-primary" id="report">Report</button>
+                        @if(Auth::user()->status == 1)
+                            <button class="btn btn-success" disabled>Activate</button>
+                            <button class="btn btn-primary" id="report">Report</button>
+                        @else
+                            <a id="activation" href="{{ route('pay') }}" class="btn btn-warning">Active Account</a>
                         @endif
                     </div>
                 </div>
